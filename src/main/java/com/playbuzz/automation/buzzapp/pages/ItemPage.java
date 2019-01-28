@@ -30,7 +30,14 @@ public class ItemPage extends BasePage {
     }
 
     public boolean clickShareToFacebookBtn() {
-        shareFacebookBtn.scroll().click();
+        shareFacebookBtn.scroll(0, 1000);
+        // TODO Replace with something smarter
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+
+        }
+        shareFacebookBtn.waitForElementToBeVisible().click();
         ArrayList<String> windows = new ArrayList<>(driver.getWindowHandles());
         driver.switchTo().window(windows.get(windows.size() - 1));
         return driver.getCurrentUrl().contains("facebook");

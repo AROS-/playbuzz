@@ -222,6 +222,12 @@ public class UIElement {
         return this;
     }
 
+    public UIElement scroll(int x, int y) {
+        initializeWebElementIfNull();
+        javascriptExecutor.executeScript(String.format("window.scrollBy(%s, %s);", x, y));
+        return this;
+    }
+
     public UIElement hover() {
         initializeWebElementIfNull();
         new Actions(webDriver).moveToElement(webElement).build().perform();
