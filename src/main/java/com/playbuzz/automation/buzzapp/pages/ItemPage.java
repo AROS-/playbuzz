@@ -37,6 +37,6 @@ public class ItemPage extends BasePage {
     }
 
     public boolean isFlipped() {
-        return flipCardPanel.contains("class", "flipped");
+        return flipCardPanel.waitAndCheckAttribute("class", "flipped");
     }
 }

@@ -273,8 +273,12 @@ public class UIElement {
     }
 
     public boolean contains(String attribute, String value) {
+        return getAttribute(attribute).contains(value);
+    }
+
+    public boolean waitAndCheckAttribute(String attribute, String value) {
         try {
-            waitForAttributeValue(attribute, value);
+            contains(attribute, value);
         } catch (Exception e) {
             return false;
         }
