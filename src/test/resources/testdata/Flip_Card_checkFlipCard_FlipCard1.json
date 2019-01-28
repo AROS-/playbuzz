@@ -1,0 +1,7 @@
+{
+  "testData":[ {
+    "cardText": "penguins are life",
+    "headerText": "Penguins",
+    "imagePath": "src/test/resources/files/img.jpg"
+  }]
+}

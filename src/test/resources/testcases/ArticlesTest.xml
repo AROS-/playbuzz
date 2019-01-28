@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name = "ArticleTesting">
+    <test name = "Check_Images" preserve-order="true">
+        <classes>
+            <class name="com.playbuzz.automation.ArticlesTest">
+                <methods>
+                    <include name = "checkImageString"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name = "Check_Tags" preserve-order="true">
+        <classes>
+            <class name="com.playbuzz.automation.ArticlesTest">
+                <methods>
+                    <include name = "checkTags"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name = "Check_Item_Alias" preserve-order="true">
+        <classes>
+            <class name="com.playbuzz.automation.ArticlesTest">
+                <methods>
+                    <include name = "checkItemAlias"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name = "Check_Title" preserve-order="true">
+        <classes>
+            <class name="com.playbuzz.automation.ArticlesTest">
+                <methods>
+                    <include name = "checkTitle"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>
