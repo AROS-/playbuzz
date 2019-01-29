@@ -71,10 +71,6 @@ public class UIElement {
         return wait(ExpectedConditions.visibilityOfElementLocated(byLocator));
     }
 
-    public UIElement waitForElementInvisibility() {
-        return wait(ExpectedConditions.invisibilityOfElementLocated(byLocator));
-    }
-
     public UIElement waitForElementToBePresent() {
         return wait(ExpectedConditions.presenceOfElementLocated(byLocator));
     }
@@ -268,6 +264,23 @@ public class UIElement {
         UIElement uiElement = new UIElement(byLocator, this.webDriver);
         uiElement.setInternalWebElement(webElement.findElement(By.xpath("..")));
         return uiElement;
+    }
+
+    public void waitForElementInvisibility() {
+        // TODO think of better logic or add all locators (tag, name, linktext)
+        String[] byLocatorStrings = byLocator.toString().split("By\\.(id)?(cssSelector)?(xpath)?:");
+        if (byLocatorStrings.length != 2) {
+            throw new RuntimeException("Not supported locator. " +
+                    "Only elements found by id, xpath or css selector can use this method");
+        }
+        String byLocatorString = byLocatorStrings[1];
+        wait.until(new ExpectedCondition<Boolean>() {
+            public Boolean apply(WebDriver driver) {
+                return (Boolean)((JavascriptExecutor) driver)
+                        .executeScript(
+                                String.format("return $('%s').is(':visible') == false", byLocatorString));
+            }
+        });
     }
 
     public boolean isElementStale() {

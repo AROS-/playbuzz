@@ -23,12 +23,7 @@ public class AddMediaModal extends BasePage {
 
     public CreateFlipCardPage uploadImage(String imagePath) {
         dropFileArea.dragAndDrop(imagePath);
-        // TODO Replace with something smarter
-        try {
-            Thread.sleep(20000);
-        } catch (InterruptedException e) {
-
-        }
+        progressCircle.waitForElementInvisibility();
         return new CreateFlipCardPage(driver);
     }
 
