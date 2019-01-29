@@ -67,6 +67,10 @@ public class UIElement {
         return wait(ExpectedConditions.elementToBeClickable(byLocator));
     }
 
+    public UIElement waitForElementToBeInvisible() {
+        return wait(ExpectedConditions.invisibilityOfElementLocated(byLocator));
+    }
+
     public UIElement waitForElementToBeVisible() {
         return wait(ExpectedConditions.visibilityOfElementLocated(byLocator));
     }
@@ -112,6 +116,22 @@ public class UIElement {
     public UIElement clickJS() {
         initializeWebElementIfNull();
         ((JavascriptExecutor) webDriver).executeScript(JSScript.CLICK.getScript(), webElement);
+        return this;
+    }
+
+    public UIElement repeatClick() {
+        initializeWebElementIfNull();
+        wait(new ExpectedCondition<Boolean>() {
+            public Boolean apply(WebDriver driver) {
+                try {
+
+                    webElement.click();
+                } catch (Exception e) {
+                    return false;
+                };
+                return true;
+            }
+        });
         return this;
     }
 
@@ -266,21 +286,30 @@ public class UIElement {
         return uiElement;
     }
 
-    public void waitForElementInvisibility() {
-        // TODO think of better logic or add all locators (tag, name, linktext)
-        String[] byLocatorStrings = byLocator.toString().split("By\\.(id)?(cssSelector)?(xpath)?:");
+    private void waitForVisibilityToBe(boolean isVisible) {
+        String[] byLocatorStrings = byLocator.toString().split("By\\.cssSelector:");
         if (byLocatorStrings.length != 2) {
             throw new RuntimeException("Not supported locator. " +
-                    "Only elements found by id, xpath or css selector can use this method");
+                    "Only elements found by css selector can use this method");
         }
         String byLocatorString = byLocatorStrings[1];
         wait.until(new ExpectedCondition<Boolean>() {
             public Boolean apply(WebDriver driver) {
                 return (Boolean)((JavascriptExecutor) driver)
                         .executeScript(
-                                String.format("return $('%s').is(':visible') == false", byLocatorString));
+                                String.format("return $('%s').is(':visible') == %s", byLocatorString, isVisible));
             }
         });
+    }
+
+    public UIElement waitForElementVisibility() {
+        waitForVisibilityToBe(true);
+        return this;
+    }
+
+    public UIElement waitForElementInvisibility() {
+        waitForVisibilityToBe(false);
+        return this;
     }
 
     public boolean isElementStale() {

@@ -59,14 +59,8 @@ public class CreateFlipCardPage extends BasePage {
     }
 
     public AddMediaModal clickAddImageBtn() {
-        // TODO Replace with something smarter
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-
-        }
         List<UIElement> elements = UIElement.getUIElements(By.cssSelector(".source-button.file"), driver);
-        elements.get(1).click();
+        elements.get(1).repeatClick();
         return new AddMediaModal(driver);
     }
 

@@ -8,6 +8,8 @@ import java.util.ArrayList;
 
 public class ItemPage extends BasePage {
 
+    private static final String FACEBOOK_URL = "https://www.facebook.com/";
+
     private UIElement flipCardPanel = UIElement.getUIElement(By.cssSelector(".pb-flip-card-viewer"),
             driver);
     private UIElement shareFacebookBtn = UIElement.getUIElement(By.cssSelector(".pb-share-button.facebook"),
@@ -19,28 +21,16 @@ public class ItemPage extends BasePage {
     }
 
     public ItemPage clickFlipCard() {
-        // TODO Replace with something smarter
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-
-        }
         flipCardPanel.waitForElementToBeClickable().click();
         return this;
     }
 
     public boolean clickShareToFacebookBtn() {
         shareFacebookBtn.scroll(0, 1000);
-        // TODO Replace with something smarter
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-
-        }
-        shareFacebookBtn.waitForElementToBeVisible().click();
+        shareFacebookBtn.repeatClick();
         ArrayList<String> windows = new ArrayList<>(driver.getWindowHandles());
         driver.switchTo().window(windows.get(windows.size() - 1));
-        return driver.getCurrentUrl().contains("facebook");
+        return driver.getCurrentUrl().contains(FACEBOOK_URL);
     }
 
     public boolean isFlipped() {
